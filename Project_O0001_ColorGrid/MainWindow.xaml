@@ -5,11 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Project_O0001_ColorGrid"
         mc:Ignorable="d"
-        Title="Потоки" Height="350" Width="525">
+        Title="Потоки" Height="350" Width="525" Loaded="Window_Loaded">
+    <Window.Resources>
+        <!-- <local:AgeToColorConverter x:Key="AgeToColorConverter" />-->
+        <local:IdToColorConverter x:Key="IdToColorConverter" />
+
+        <!--  <Style TargetType="{x:Type DataGridRow}">
+            <Setter Property="Background" Value="{Binding Age, Converter={StaticResource AgeToColorConverter}}" />
+        </Style>-->
+        <Style x:Key="IdStyle" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="{Binding Id1, Converter={StaticResource IdToColorConverter}}" />
+            
+            <Setter Property="BorderBrush"  Value="Black" />
+        </Style>
+    </Window.Resources>
     <Grid>
-        <Grid Margin="10,60,10,10" Background="#FFB8B8B8" ShowGridLines="True" Name="MyGrid">
-            <!-- Устанавливаем две строки -->
-            <Grid.RowDefinitions>
+        <!-- <Grid Margin="10,60,10,10" Background="#FFB8B8B8" ShowGridLines="True" Name="MyGrid"> -->
+        <!-- Устанавливаем две строки -->
+        <!--  <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
@@ -20,9 +33,9 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
-            <!-- Устанавливаем три столбца -->
-            <Grid.ColumnDefinitions>
+            </Grid.RowDefinitions>-->
+        <!-- Устанавливаем три столбца -->
+        <!--  <Grid.ColumnDefinitions>
                 <ColumnDefinition ></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
@@ -135,8 +148,29 @@
             <Rectangle Name="R98" Fill="White" Grid.Row="9" Grid.Column="8" />
             <Rectangle Name="R99" Fill="White" Grid.Row="9" Grid.Column="9" />
             
-        </Grid>
+        </Grid>-->
+
+
         <Button Name="btn" Tag="Q W erty" Content="Старт" Margin="30,10,30,0" FontWeight="Bold" FontStyle="Italic" Height="29" VerticalAlignment="Top" Click="Button_Click"/>
+        <DataGrid Name="dataGrid" AutoGenerateColumns="False" Margin="10,44,10,10">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID1" Width="*" Binding="{Binding Id1}" CellStyle="{StaticResource IdStyle}"/>
+                <DataGridTextColumn Header="ID2"  Width="*" Binding="{Binding Id2}" />
+                <DataGridTextColumn Header="ID3"  Width="*" Binding="{Binding Id3}"/>
+                <DataGridTextColumn Header="ID4"  Width="*" Binding="{Binding Id4}"/>
+                <DataGridTextColumn Header="ID5"  Width="*" Binding="{Binding Id5}"/>
+                <DataGridTextColumn Header="ID6"  Width="*" Binding="{Binding Id6}"/>
+                <DataGridTextColumn Header="ID7"  Width="*" Binding="{Binding Id7}"/>
+                <DataGridTextColumn Header="ID8"  Width="*" Binding="{Binding Id8}"/>
+                <DataGridTextColumn Header="ID9"  Width="*" Binding="{Binding Id9}"/>
+                <DataGridTextColumn Header="ID9"  Width="*" Binding="{Binding Id9}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+
+
+
 
     </Grid>
 </Window>

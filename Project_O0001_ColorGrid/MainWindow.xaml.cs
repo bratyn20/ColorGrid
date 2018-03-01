@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Threading;
+using System.Globalization;
 
 namespace Project_O0001_ColorGrid
 {
@@ -22,6 +23,7 @@ namespace Project_O0001_ColorGrid
     /// </summary>
     public partial class MainWindow : Window
     {
+        private List<Car> Cars = new List<Car>();
         public MainWindow()
         {
             InitializeComponent();
@@ -52,7 +54,10 @@ namespace Project_O0001_ColorGrid
                             // R00.Fill = Brushes.AliceBlue;      // k.Fill = Brushes.Aqua;
                             //var u = (Rectangle)this.FindName(k);
                             //u.Fill = Brushes.Azure;
-                            ((Rectangle)this.FindName(k)).Fill = Brushes.Red;
+                            // ((Rectangle)this.FindName(k)).Fill = Brushes.Red;
+                            var firstRow = (DataGridRow)dataGrid.ItemContainerGenerator.ContainerFromItem(dataGrid.Items[x]);
+                            var firstColumnFirstRow = (DataGridCell)dataGrid.Columns[y].GetCellContent(firstRow).Parent;
+                            firstColumnFirstRow.Background = Brushes.Red;
                         }
                                             );
 
@@ -62,7 +67,10 @@ namespace Project_O0001_ColorGrid
                     (ThreadStart)delegate ()
                     {
                         // R00.Fill = Brushes.Blue;
-                        ((Rectangle)this.FindName(k)).Fill = Brushes.White;
+                        //((Rectangle)this.FindName(k)).Fill = Brushes.White;
+                        var firstRow = (DataGridRow)dataGrid.ItemContainerGenerator.ContainerFromItem(dataGrid.Items[x]);
+                        var firstColumnFirstRow = (DataGridCell)dataGrid.Columns[y].GetCellContent(firstRow).Parent;
+                        firstColumnFirstRow.Background = Brushes.White;
                     }
                                             );
 
@@ -87,7 +95,10 @@ namespace Project_O0001_ColorGrid
                 this.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
                     (ThreadStart)delegate ()
                     {
-                        ((Rectangle)this.FindName(k)).Fill = Brushes.Blue;
+                        //((Rectangle)this.FindName(k)).Fill = Brushes.Blue;
+                        var firstRow = (DataGridRow)dataGrid.ItemContainerGenerator.ContainerFromItem(dataGrid.Items[x]);
+                        var firstColumnFirstRow = (DataGridCell)dataGrid.Columns[y].GetCellContent(firstRow).Parent;
+                        firstColumnFirstRow.Background = Brushes.Blue;
                     }
                                             );
 
@@ -96,7 +107,10 @@ namespace Project_O0001_ColorGrid
                 this.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
                     (ThreadStart)delegate ()
                     {
-                        ((Rectangle)this.FindName(k)).Fill = Brushes.White;
+                        //((Rectangle)this.FindName(k)).Fill = Brushes.White;
+                        var firstRow = (DataGridRow)dataGrid.ItemContainerGenerator.ContainerFromItem(dataGrid.Items[x]);
+                        var firstColumnFirstRow = (DataGridCell)dataGrid.Columns[y].GetCellContent(firstRow).Parent;
+                        firstColumnFirstRow.Background = Brushes.White;
                     }
                                             );
 
@@ -159,6 +173,53 @@ namespace Project_O0001_ColorGrid
            
 
             //btn.Content = "Стоп";
+        }
+
+
+        public class Car
+        {
+            public int Id1 { get; set; }
+            public int Id2 { get; set; }
+            public int Id3 { get; set; }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Cars.Clear();
+            for (int i = 0; i<= 9; i++) {
+                Cars.Add(new Car() { Id1 = i*10 + 0, Id2 = i*10 + 1, Id3 = i*10 + 2 });
+            }
+
+        /*    Cars.Add(new Car() { Id1 = "1", Id2 = "2", Id3 = "3" });
+            Cars.Add(new Car() { Id1 = "4", Id2 = "5", Id3 = "6" });
+            Cars.Add(new Car() { Id1 = "7", Id2 = "8", Id3 = "9" });
+            Cars.Add(new Car() { Id1 = "10", Id2 = "11", Id3 = "12" });*/
+
+
+            dataGrid.ItemsSource = Cars;
+            dataGrid.Background = Brushes.White;
+        }
+
+
+    }
+    class IdToColorConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+           /* if ((int)value == 20)
+            {
+              new SolidColorBrush(Colors.Aqua);
+            }
+            else
+            {
+               new SolidColorBrush(Colors.White);
+            }*/
+             return (int)value == 20 ? new SolidColorBrush(Colors.Yellow) : new SolidColorBrush(Colors.White);
+           // return new  SolidColorBrush();
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new Exception("The method or operation is not implemented.");
         }
     }
 }
